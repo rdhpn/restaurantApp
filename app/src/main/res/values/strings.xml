@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">RestaurantsApp</string>
+    <string name="iv_content_description_restaurant_picture">restaurant pic</string>
+    <string name="tv_text_restaurant_name">restaurant name</string>
+    <string name="restaurants_near_you">Hottest and Newest Restaurants in Current Location</string>
+    <string name="price">price</string>
+    <string name="imageUrl">image Url</string>
+    <string name="rating">rating</string>
+    <string name="distance">distance</string>
+    <string name="phone">phone #</string>
+    <string name="address">address</string>
+    <string name="user" />
+    <string name="iv_picture">pic</string>
+    <string name="tv_userRating">user rating</string>
+    <string name="DateOfReview">Date of Review</string>
+    <string name="userRating">user rating</string>
+    <string name="reviewContent">review content</string>
+    <string name="tv_text_user_name">user name</string>
+    <string name="icon">icon</string>
+</resources>
