@@ -19,6 +19,6 @@ fun Review.mapToReviewDomain(): ReviewDomain =
         name = this.user?.name ?: " - ",
         userIconUrl = this.user?.imageUrl ?: " - ",
         userRating = this.rating,
-        dayOfReview = this.timeCreated!!.split(" ")[0],
+        dayOfReview = this?.timeCreated?.split(" ")?.get(0) ?: " - ",
         reviewContent = this.text
     )

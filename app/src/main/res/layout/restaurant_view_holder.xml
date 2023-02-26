@@ -58,20 +58,24 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_price" />
 
-        <TextView
+        <RatingBar
             android:id="@+id/tv_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="?android:attr/ratingBarStyleSmall"
+            android:numStars="5"
+            android:stepSize="0.1"
+            android:isIndicator="true"
             android:layout_margin="8dp"
             android:gravity="center"
             android:text="@string/rating"
             android:textAlignment="center"
-            android:textColor="@color/green"
+            android:textColor="@color/blue"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/tv_imageUrl"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_imageUrl" />
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <TextView
             android:id="@+id/tv_distance"

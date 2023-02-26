@@ -74,7 +74,7 @@ class RestaurantViewHolder(
         binding.tvName.text = item.name ?: "NO NAME PROVIDED"
         binding.tvPrice.text = "Price: " + item.price ?: "NO NAME PROVIDED"
         binding.tvImageUrl.text = item.image ?: "NO NAME PROVIDED"
-        binding.tvRating.text = "Rating: " + (item.rating ?: 0.0).toString()
+        binding.tvRating.rating = item.rating!!.toFloat()
         binding.tvDistance.text = "Distance: " + (item.distance ?: 0.0).toString()
         itemView.setOnClickListener { item?.let(onItemClick) }
     }

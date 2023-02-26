@@ -12,7 +12,6 @@ import com.example.restaurantsapp.database.LocalRepository
 import com.example.restaurantsapp.model.domain.RestaurantDomain
 import com.example.restaurantsapp.model.domain.ReviewDomain
 import com.example.restaurantsapp.rest.RestaurantsRepository
-import com.example.restaurantsapp.utils.GetLatitudeAndLongitude
 import com.example.restaurantsapp.utils.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -31,6 +30,8 @@ class RestaurantViewModel @Inject constructor(
 
     var id = ""
     var fragmentState: Boolean = false
+    var latitude = 0.0
+    var Longitude = 0.0
     private val _restaurantsByLocation: MutableLiveData<UIState<List<RestaurantDomain>>> =
         MutableLiveData(UIState.LOADING)
     val restaurantsByLocation: LiveData<UIState<List<RestaurantDomain>>> get() = _restaurantsByLocation
@@ -49,12 +50,14 @@ class RestaurantViewModel @Inject constructor(
         getReviewsById()
     }
 
-    fun getRestaurantsByLocation() {
+    fun getRestaurantsByLocation(latitude: Double?=null, longtitude: Double?=null) {
+        if (latitude !=null && longtitude !=null) {
         viewModelScope.launch(ioDispatcher) {
-            restaurantRepository.getHotNewRestaurants().collect {
+            restaurantRepository.getHotNewRestaurants(latitude, longtitude).collect {
                 _restaurantsByLocation.postValue(it)
                 Log.d(ContentValues.TAG, "TEST: $_restaurantsByLocation")
             }
+        }
         }
     }
 

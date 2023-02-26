@@ -29,7 +29,7 @@ fun List<Business>?.mapToRestaurantDomain(): List<RestaurantDomain> =
             phone = it.displayPhone ?: "not available",
             price = it.price ?: "not available",
             rating = it.rating ?: 0.0,
-            address = it.location?.displayAddress!!.joinToString(separator = ","),
+            address = it.location?.displayAddress?.joinToString(separator = ",") ?: "no address",
             distance = it.distance ?: 0.0,
         )
     } ?: emptyList()
@@ -42,7 +42,7 @@ fun Business.mapToRestaurantDomain(): RestaurantDomain =
         this.phone ?: "no phone available",
         this.price ?: "no price available",
         this.rating ?: 0.0,
-        address = this.location?.displayAddress!!.joinToString(separator = ","),
+        address = this.location?.displayAddress?.joinToString(separator = ",") ?: "no address",
         this.distance ?: 0.0
     )
 

@@ -4,7 +4,6 @@ import com.example.restaurantsapp.database.LocalRepository
 import com.example.restaurantsapp.database.LocalRepositoryImpl
 import com.example.restaurantsapp.rest.RestaurantsRepository
 import com.example.restaurantsapp.rest.RestaurantsRepositoryImpl
-import com.example.restaurantsapp.utils.GetLatitudeAndLongitude
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

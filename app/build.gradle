@@ -53,7 +53,7 @@ dependencies {
 //    implementation "com.google.android.gms:play-services-location:18.0.0"
 
     // For developers using AndroidX in their applications
-    implementation 'pub.devrel:easypermissions:3.0.0'
+//    implementation 'pub.devrel:easypermissions:3.0.0'
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.google.code.gson:gson:2.10.1'
@@ -72,6 +72,9 @@ dependencies {
     implementation("androidx.room:room-runtime:2.5.0")
     kapt("androidx.room:room-compiler:2.5.0")
     implementation("androidx.room:room-ktx:2.5.0")
+
+    //location
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 //    //room database
 //    implementation "androidx.room:room-runtime:2.5.0"
 //    implementation 'androidx.room:room-ktx:2.5.0'

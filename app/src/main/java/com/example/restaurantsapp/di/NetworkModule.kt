@@ -2,7 +2,6 @@ package com.example.restaurantsapp.di
 
 import com.example.restaurantsapp.rest.RequestInterceptor
 import com.example.restaurantsapp.rest.RestaurantsApi
-import com.example.restaurantsapp.utils.GetLatitudeAndLongitude
 import com.google.gson.Gson
 import dagger.Binds
 import dagger.Module
@@ -65,6 +64,6 @@ class NetworkModule {
     @Provides
     fun providesIODispatcher(): CoroutineDispatcher = Dispatchers.IO
 
-    @Provides
-    fun providesLoc():  GetLatitudeAndLongitude = GetLatitudeAndLongitude()
+//    @Provides
+//    fun providesLoc():  GetLatitudeAndLongitude = GetLatitudeAndLongitude()
 }
