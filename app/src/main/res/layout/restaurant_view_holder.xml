@@ -37,7 +37,6 @@
             android:text="@string/price"
             android:textColor="@color/purple_200"
             android:textSize="19sp"
-            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_name" />
@@ -52,8 +51,7 @@
             android:autoLink="web"
             android:textAlignment="center"
             android:textColor="@color/blue"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:textSize="12sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_price" />
@@ -87,7 +85,6 @@
             android:textAlignment="center"
             android:textColor="@color/purple_200"
             android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
