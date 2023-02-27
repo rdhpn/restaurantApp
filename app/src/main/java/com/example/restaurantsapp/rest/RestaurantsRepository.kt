@@ -61,14 +61,7 @@ class RestaurantsRepositoryImpl @Inject constructor(
             val response = serviceApi.getReviewsByID(id)
             if (response.isSuccessful) {
                 response.body()?.let {
-                    val reviewList: MutableList<ReviewDomain> = mutableListOf()
-                    for (i in 0..2) {
-                        if (it.reviews?.get(i) != null) it?.reviews[i]?.let { it1 ->
-                            reviewList.add(
-                                it1.mapToReviewDomain())
-                        }
-                    }
-                    emit(UIState.SUCCESS(reviewList))
+                    emit(UIState.SUCCESS(it.reviews?.take(3).mapToReviewDomain()))
                 } ?: throw NullReviewResponse() //check if response was null
             } else throw FailureResponse(response.errorBody()?.string())
         } catch (e: Exception) {

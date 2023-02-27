@@ -36,13 +36,13 @@ class RestaurantViewModel @Inject constructor(
         MutableLiveData(UIState.LOADING)
     val restaurantsByLocation: LiveData<UIState<List<RestaurantDomain>>> get() = _restaurantsByLocation
 
-    private val _restaurantById: MutableLiveData<UIState<RestaurantDomain>> =
+    private val _restaurantById: MutableLiveData<UIState<RestaurantDomain?>> =
         MutableLiveData(UIState.LOADING)
-    val restaurantById: LiveData<UIState<RestaurantDomain>> get() = _restaurantById
+    val restaurantById: LiveData<UIState<RestaurantDomain?>> get() = _restaurantById
 
-    private val _reviewsById: MutableLiveData<UIState<List<ReviewDomain>>> =
+    private val _reviewsById: MutableLiveData<UIState<List<ReviewDomain?>>> =
         MutableLiveData(UIState.LOADING)
-    val reviewsById: LiveData<UIState<List<ReviewDomain>>> get() = _reviewsById
+    val reviewsById: LiveData<UIState<List<ReviewDomain?>>> get() = _reviewsById
 
     init {
         getRestaurantsByLocation()

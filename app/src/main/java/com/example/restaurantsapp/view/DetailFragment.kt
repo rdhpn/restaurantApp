@@ -48,14 +48,14 @@ class DetailsFragment : BaseFragment() {
         restaurantViewModel.restaurantById.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UIState.LOADING -> {}
-                is UIState.SUCCESS<RestaurantDomain> -> {
-                    binding.tvName.text = state.response.name
-                    binding.tvPrice.text = "Price: " + state.response.price
-                    binding.tvImageUrl.text = state.response.image ?: "NO NAME PROVIDED"
-                    binding.tvRating.rating = state.response.rating.toFloat()
+                is UIState.SUCCESS<RestaurantDomain?> -> {
+                    binding.tvName.text = state.response?.name
+                    binding.tvPrice.text = "Price: " + state.response?.price
+                    binding.tvImageUrl.text = state.response?.image ?: "NO NAME PROVIDED"
+                    binding.tvRating.rating = state.response?.rating?.toFloat() ?: 0.0f
 //                        "Overall Rating: " + (state.response.rating ?: 0.0).toString()
-                    binding.tvPhone.text = state.response.phone
-                    binding.tvAddress.text = state.response.address
+                    binding.tvPhone.text = state.response?.phone
+                    binding.tvAddress.text = state.response?.address
                 }
                 is UIState.ERROR -> {
                     state.error.localizedMessage?.let {
@@ -74,9 +74,9 @@ class DetailsFragment : BaseFragment() {
                 is UIState.LOADING -> {
 
                 }
-                is UIState.SUCCESS<List<ReviewDomain>> -> {
-                    state.response.forEach {
-                        listVT.add(ViewType.REVIEW(it))
+                is UIState.SUCCESS<List<ReviewDomain?>> -> {
+                    state.response?.forEach {
+                        listVT.add(ViewType.REVIEW(it!!))
                     }
                     restaurantAdapter.updateItems(listVT)
                 }

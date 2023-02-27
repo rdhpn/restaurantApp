@@ -43,7 +43,7 @@ fun Business.mapToRestaurantDomain(): RestaurantDomain =
         this.price ?: "no price available",
         this.rating ?: 0.0,
         address = this.location?.displayAddress?.joinToString(separator = ",") ?: "no address",
-        this.distance ?: 0.0
+        this.distance?: 0.0
     )
 
 fun List<RestaurantTable>.mapToRestaurantsFromTable(): List<RestaurantDomain> {

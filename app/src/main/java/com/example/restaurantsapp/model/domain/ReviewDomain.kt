@@ -14,11 +14,13 @@ data class ReviewDomain(
     val reviewContent: String? = null
 )
 
-fun Review.mapToReviewDomain(): ReviewDomain =
-    ReviewDomain(
-        name = this.user?.name ?: " - ",
-        userIconUrl = this.user?.imageUrl ?: " - ",
-        userRating = this.rating,
-        dayOfReview = this?.timeCreated?.split(" ")?.get(0) ?: " - ",
-        reviewContent = this.text
-    )
+fun List<Review>?.mapToReviewDomain(): List<ReviewDomain> =
+    this?.map {
+        ReviewDomain(
+            name = it.user?.name ?: " - ",
+            userIconUrl = it.user?.imageUrl ?: " - ",
+            userRating = it.rating ?: 0,
+            dayOfReview = it.timeCreated?.split(" ")?.get(0) ?: " - ",
+            reviewContent = it.text ?: " - "
+        )
+    } ?: emptyList()
