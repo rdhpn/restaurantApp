@@ -16,6 +16,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.location.LocationManagerCompat.getCurrentLocation
 import androidx.core.location.LocationManagerCompat.isLocationEnabled
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.restaurantsapp.databinding.ActivityMainBinding
 import com.example.restaurantsapp.viewmodel.RestaurantViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -36,6 +39,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        val hostFragment =
+            supportFragmentManager.findFragmentById(R.id.frag_container) as NavHostFragment
+        setupActionBarWithNavController(hostFragment.navController)
+    }
+
+    //Navigate between fragment with the arrow
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.frag_container)
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
 
 //        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 //        getCurrentLocation()
@@ -134,4 +149,3 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 //    }
-}

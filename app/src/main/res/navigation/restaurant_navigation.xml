@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/restaurants"
         android:name="com.example.restaurantsapp.view.RestaurantsFragment"
-        android:label="Random Restaurants"
+        android:label="Restaurant List"
         tools:layout="@layout/restaurant_recycler_view">
         <action
             android:id="@+id/action_restaurants_to_details"
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/details"
         android:name="com.example.restaurantsapp.view.DetailsFragment"
-        android:label="Random Restaurants"
+        android:label="Restaurant Reviews"
         tools:layout="@layout/fragment_details">
         <action
             android:id="@+id/action_details_to_restaurants"
