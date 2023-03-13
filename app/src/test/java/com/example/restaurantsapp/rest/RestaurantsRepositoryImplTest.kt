@@ -1,21 +1,16 @@
 package com.example.restaurantsapp.rest
 
 import com.example.restaurantsapp.database.LocalRepository
-import com.example.restaurantsapp.database.LocalRepositoryImpl
-import com.example.restaurantsapp.database.RestaurantsDAO
 import com.example.restaurantsapp.model.Business
 import com.example.restaurantsapp.model.YelpResponse
 import com.example.restaurantsapp.model.domain.RestaurantDomain
 import com.example.restaurantsapp.model.domain.ReviewDomain
-import com.example.restaurantsapp.model.domain.restaurant.RestaurantResponse
 import com.example.restaurantsapp.model.domain.reviews.ReviewsResponse
 import com.example.restaurantsapp.utils.UIState
-import io.mockk.MockKSettings.relaxed
-import io.mockk.clearAllMocks
-import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -25,24 +20,25 @@ import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
+import org.junit.runner.RunWith
 
 
+//@RunWith(RobolectricTestRunner::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 internal class RestaurantsRepositoryImplTest {
 
     private lateinit var testObject: RestaurantsRepository
+
     private var localRepository = mockk<LocalRepository>(relaxed = true)
     private val mockServiceApi = mockk<RestaurantsApi>(relaxed = true)
+
     private val testDispatcher = UnconfinedTestDispatcher()
     private val testScope = TestScope(testDispatcher)
 
-
     @Before
     fun setUp() {
-
         Dispatchers.setMain(testDispatcher)
         testObject = RestaurantsRepositoryImpl(mockServiceApi, localRepository)
-
     }
 
     @After
@@ -51,35 +47,36 @@ internal class RestaurantsRepositoryImplTest {
         clearAllMocks()
     }
 
-//    @Test
-//    fun `get all restaurants when server returns a success response`() {
-//        //ASSIGN
-//        coEvery {
-//            mockServiceApi.getHotNewRestaurants(
-//                currentLoc.currentLatitude,
-//                currentLoc.currentLongitude
-//            )
-//        } returns mockk {
-//            every { isSuccessful } returns true
-//            every { body() } returns YelpResponse(businesses = listOf(mockk(), mockk()))
-//        }
-//
-//
-//        //ACTION
-//        var state: UIState<List<RestaurantDomain>> = UIState.LOADING
-//        val job = testScope.launch {
-//            testObject.getHotNewRestaurants().collect {
-//                state = it
-//            }
-//        }
-//
-//        //ASSESS
-//        assertEquals((state as UIState.SUCCESS<List<RestaurantDomain>>).response.size,2)
-////        assert(state is UIState.SUCCESS)
-//
-//        job.cancel()
-//
-//    }
+    @Test
+    fun `get all hot and new restaurants when server has a list of items returns a success state`() {
+       // ASSIGNMENT
+        coEvery { mockServiceApi.getHotNewRestaurants(0.0, 0.0) } returns mockk  {
+            every { isSuccessful } returns true
+            every { body() } returns YelpResponse(listOf(
+                mockk(relaxed = true),
+                mockk(relaxed = true),
+                mockk(relaxed = true)
+            )
+            )
+        }
+        val states =  mutableListOf<UIState<List<RestaurantDomain>>>()
+
+        // ACTION
+        val job = testScope.launch {
+            testObject.getHotNewRestaurants(0.0, 0.0).collect {
+                states.add(it)
+            }
+        }
+
+        // ASSERTION
+        assertEquals(2, states.size)
+        val success = (states[1]  as UIState.SUCCESS).response
+        assertEquals(3, success.size)
+
+        coVerify { mockServiceApi.getHotNewRestaurants(0.0,0.0) }
+
+        job.cancel()
+    }
 
     @Test
     fun `get a restaurant when server returns success response`() {
@@ -94,6 +91,7 @@ internal class RestaurantsRepositoryImplTest {
         }
 
         //ACTION
+
         var state: UIState<RestaurantDomain> = UIState.LOADING
         val job = testScope.launch {
             testObject.getRestaurantByID(id = "123").collect {
@@ -109,31 +107,38 @@ internal class RestaurantsRepositoryImplTest {
         //ASSESS
     }
 
+//    class SandwichTest
     @Test
     fun `get reviews when server returns success response`() {
         //ASSIGN
-        coEvery {
-            mockServiceApi.getReviewsByID(
-                id = "123"
-            )
-        } returns mockk {
+        coEvery { mockServiceApi.getReviewsByID(id = "123") } returns mockk {
             every { isSuccessful } returns true
-            every { body() } returns ReviewsResponse(reviews = listOf(mockk(), mockk()), total=3)
+            every { body() } returns ReviewsResponse(
+                reviews = listOf(
+                    mockk(relaxed = true),
+                    mockk(relaxed = true),
+                    mockk(relaxed = true)
+                ),
+                total=2
+            )
         }
 
         //ACTION
-        var state: UIState<List<ReviewDomain>> = UIState.LOADING
-        val job = testScope.launch {
-            testObject.getReviewsByID(id = "123").collect {
-                state = it
-            }
+    val states =  mutableListOf<UIState<List<ReviewDomain>>>()
+
+    val job = testScope.launch {
+        testObject.getReviewsByID(id = "123").collect {
+            states.add( it)
         }
+    }
 
-        // ASSERTION
-//        assert((state as UIState.SUCCESS).response
-        assertEquals((state as UIState.SUCCESS<List<ReviewDomain>>).response.size, 2)
+    // ASSERTION
+    assertEquals(2, states.size)
+    assertEquals((states[1] as UIState.SUCCESS<List<ReviewDomain>>).response.size, 3)
 
-        job.cancel()
+    job.cancel()
 
     }
 }
+
+//  mokito can't mock static or private method

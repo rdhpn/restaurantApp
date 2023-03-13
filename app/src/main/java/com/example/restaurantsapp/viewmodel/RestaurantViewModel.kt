@@ -1,8 +1,6 @@
 package com.example.restaurantsapp.viewmodel
 
 import android.content.ContentValues
-import android.location.Location
-import android.location.LocationListener
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -32,23 +30,18 @@ class RestaurantViewModel @Inject constructor(
     var fragmentState: Boolean = false
     var latitude = 0.0
     var Longitude = 0.0
+
     private val _restaurantsByLocation: MutableLiveData<UIState<List<RestaurantDomain>>> =
         MutableLiveData(UIState.LOADING)
     val restaurantsByLocation: LiveData<UIState<List<RestaurantDomain>>> get() = _restaurantsByLocation
 
-    private val _restaurantById: MutableLiveData<UIState<RestaurantDomain>> =
+    private val _restaurantById: MutableLiveData<UIState<RestaurantDomain?>> =
         MutableLiveData(UIState.LOADING)
-    val restaurantById: LiveData<UIState<RestaurantDomain>> get() = _restaurantById
+    val restaurantById: LiveData<UIState<RestaurantDomain?>> get() = _restaurantById
 
-    private val _reviewsById: MutableLiveData<UIState<List<ReviewDomain>>> =
+    private val _reviewsById: MutableLiveData<UIState<List<ReviewDomain?>>> =
         MutableLiveData(UIState.LOADING)
-    val reviewsById: LiveData<UIState<List<ReviewDomain>>> get() = _reviewsById
-
-    init {
-        getRestaurantsByLocation()
-        getRestaurantById()
-        getReviewsById()
-    }
+    val reviewsById: LiveData<UIState<List<ReviewDomain?>>> get() = _reviewsById
 
     fun getRestaurantsByLocation(latitude: Double?=null, longtitude: Double?=null) {
         if (latitude !=null && longtitude !=null) {
